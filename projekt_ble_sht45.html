@@ -83,6 +83,43 @@
             Pozostało jedno kluczowe pytanie: jak te dane skutecznie wyłapać? Pierwotnie planowałem obarczyć tym zadaniem wbudowany moduł Bluetooth w Raspberry Pi obsługującym Home Assistant. W międzyczasie jednak w moje ręce wpadła nowa płytka <strong>ESP32-C6</strong>. Wyposażyłem ją w zewnętrzną antenę i narodził się pomysł, by wykorzystać ją jako dedykowany odbiornik-bramkę (BLE Gateway). Odpowiednio zaprogramowana za pomocą ESPHome, zbiera pakiety z moich miniaturowych kostek nRF52840 i bezpośrednio przekazuje czyste encje do Home Assistanta. Brzmiało to jak plan doskonały.
         </p>
     </section>
+        <section>
+        <h2>[04] Mechanika "kanapki" i projekt przestrzenny</h2>
+        <p>
+            Po rozwiązaniu kwestii komunikacji, musiałem zaplanować fizyczny układ elementów na płytce. Montaż wszystkiego na płasko? To nie najgorszy pomysł, ale całościowy układ byłby dosyć spory, co przeczyło założeniu o miniaturyzacji. Umieszczenie mikrokontrolera i czujnika po jednej stronie, a koszyka na baterię po drugiej? Lepiej, ale nadal nie idealnie.
+        </p>
+        <p>
+            Ostatecznie za najlepsze rozwiązanie uznałem stworzenie konstrukcji typu <strong>"kanapka" (stack)</strong>. Zaprojektowałem układ warstwowy: jako górną i dolną warstwę wykorzystałem odpowiednio mikrokontroler oraz czujnik, zamykając koszyk na baterię wewnątrz tej konstrukcji. Aby umożliwić bezproblemową wymianę ogniwa bez konieczności rozlutowywania całości, moduły połączyłem za pomocą złączy goldpin – górna płytka PCB otrzymała piny męskie, a dolna żeńskie. Dzięki temu mikrokontroler można w każdej chwili po prostu "odpiąć".
+        </p>
+    </section>
+
+    <section>
+        <h2>[05] Oprogramowanie i walka o mikroampery</h2>
+        <p>
+            Przed chwyceniem za lutownicę należało dobrze przemyśleć kwestie programowe i sprawdzić realną efektywność energetyczną układu. Jako środowisko posłużyło mi Arduino IDE oraz zestaw gotowych bibliotek. Zaimplementowałem najprostszy możliwy schemat działania: 
+            <br><code>inicjalizacja ➔ pomiar ➔ publikacja BLE ➔ deep sleep</code>.
+        </p>
+        <p>
+            Zgodnie z moimi obawami, pierwsze testy nie przyniosły pożądanych rezultatów. Zamiast oczekiwanych kilku mikroamperów, układ w stanie spoczynku pobierał ich kilkaset.
+        </p>
+        
+        <div class="code-placeholder" style="border-left: 4px solid var(--accent); padding-left: 15px; margin: 20px 0; color: var(--text-muted);">
+            <em>[Miejsce na techniczny opis optymalizacji kodu, wyłączania peryferiów i redukcji poboru prądu...]</em>
+        </div>
+
+        <p>
+            Wskutek dokonanych poprawek i odcinania zbędnych peryferiów osiągnąłem spektakularny rezultat: <strong>równe 4 µA w stanie uśpienia</strong>. To prąd tak znikomy, że wolniej rozładowuje baterię, niż wynosi jej naturalny prąd samorozładowania.
+        </p>
+    </section>
+    <section>
+        <h2>[06] Wykonanie i lutowanie</h2>
+        <p>
+            Do fizycznej realizacji prototypów wykorzystałem uniwersalne płytki PCB (perfboards), z których wyciąłem małe kwadraty o wymiarach 9x9 otworów. 
+        </p>
+        <p>
+            Na górną warstwę wlutowałem mikrokontroler nRF52840 na płasko. Połączenia z mikrokontrolera na sąsiednie pady wykonałem rozlewając cynę, tworząc precyzyjne mostki dla najważniejszych linii: zasilania (GND, 3.3V), pinów komunikacji I2C (SDA, SCL) oraz dedykowanego pinu do odcinania zasilania peryferiów. Na drugiej, dolnej płytce, z jednej strony wlutowałem koszyk na baterię oraz żeńskie goldpiny, a na odwrocie przylutowałem moduł czujnika SHT45.
+        </p>
+    </section>
 
     <footer>
         © 2026 Łukasz Grzybowski
