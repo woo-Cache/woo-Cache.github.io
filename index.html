@@ -4,139 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Łukasz Grzybowski – Hardware & Code</title>
-    <style>
-        /* Techniczny, surowy motyw */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #121212;
-            color: #d4d4d4;
-            margin: 0;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        
-        /* Główny kontener o ostrych rysach */
-        .container {
-            max-width: 850px;
-            margin: 0 auto;
-            background-color: #1e1e1e;
-            border: 2px solid #444;
-            box-shadow: 8px 8px 0px #000; /* Twardy, "brutalistyczny" cień */
-        }
-
-        /* Nagłówek w stylu terminala */
-        header {
-            background-color: #000;
-            border-bottom: 3px solid #ff8800; /* Przemysłowy pomarańcz */
-            padding: 30px;
-        }
-        
-        h1, h2, h3 {
-            font-family: 'Consolas', 'Courier New', monospace;
-            color: #ff8800;
-            margin-top: 0;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-        }
-
-        header p {
-            color: #888;
-            font-family: monospace;
-            font-size: 1.1rem;
-            margin: 0;
-        }
-
-        section {
-            padding: 25px 30px;
-            border-bottom: 1px dashed #444;
-        }
-
-        section:last-of-type {
-            border-bottom: none;
-        }
-
-        /* Tagi technologii */
-        .tech-tag {
-            display: inline-block;
-            background-color: #333;
-            color: #fff;
-            padding: 4px 10px;
-            font-size: 0.8rem;
-            font-family: monospace;
-            border: 1px solid #555;
-            margin-right: 5px;
-            margin-bottom: 10px;
-        }
-
-        /* Solidny, techniczny przycisk */
-        a.btn {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 18px;
-            background-color: transparent;
-            color: #ff8800;
-            text-decoration: none;
-            border: 2px solid #ff8800;
-            font-weight: bold;
-            font-family: monospace;
-            text-transform: uppercase;
-            transition: all 0.15s ease-in-out;
-        }
-
-        a.btn:hover {
-            background-color: #ff8800;
-            color: #000;
-        }
-
-        footer {
-            background-color: #000;
-            color: #666;
-            text-align: center;
-            padding: 15px;
-            font-family: monospace;
-            border-top: 2px solid #444;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
     <header>
         <h1>Łukasz Grzybowski</h1>
-        <p>> SYSTEMY EMBEDDED_ | AUTOMATYKA_ | PYTHON_</p>
+        <p>Elektronika • Systemy Embedded • Automatyka • Python</p>
     </header>
 
     <section>
-        <h2>[01] O MNIE</h2>
+        <h2>O mnie</h2>
         <p>
-            Tworzę projekty łączące sprzęt z oprogramowaniem.
-            Specjalizuję się w energooszczędnych systemach wbudowanych, automatyce i rozwiązaniach opartych na serwerach linuksowych oraz mikrokontrolerach.
+            Zawodowo pracuję jako automatyk utrzymania ruchu, gdzie na co dzień rozwiązuję problemy sprzętowe i diagnozuję usterki. Po godzinach projektuję własne płytki PCB, piszę skrypty i buduję zaawansowane systemy smart home. Skupiam się na optymalizacji sprzętu, architekturze układów i wyciąganiu maksymalnej energooszczędności z mikrokontrolerów.
         </p>
     </section>
 
     <section>
-        <h2>[02] PROJEKTY SPRZĘTOWE</h2>
+        <h2>Projekty</h2>
 
         <h3>Energooszczędne węzły sensoryczne BLE</h3>
         <div>
             <span class="tech-tag">nRF52840</span>
             <span class="tech-tag">SHT45</span>
-            <span class="tech-tag">C++</span>
+            <span class="tech-tag">C++ / BLE</span>
             <span class="tech-tag">EasyEDA</span>
         </div>
         <p>
-            Zaprojektowane od podstaw, miniaturowe moduły na autorskiej płytce PCB. Urządzenia oparte są o mikrokontroler Seeed Studio XIAO nRF52840 oraz wysoce precyzyjny czujnik temperatury i wilgotności SHT45. Całość zasilana jest z baterii CR2032. Kod został zoptymalizowany pod kątem głębokiego usypiania, redukując pobór prądu do poziomu mikroamperów (µA), co pozwala na długotrwałą pracę bez wymiany zasilania.
+            Zaprojektowane od podstaw, miniaturowe moduły na autorskiej płytce PCB. Kostki składają się z Seeed Studio XIAO nRF52840 oraz niezwykle dokładnego czujnika SHT45. Całość jest ekstremalnie zoptymalizowana pod kątem oszczędzania energii (deep sleep, zasilanie z baterii CR2032).
         </p>
-        <a href="projekt_ble_sht45.html" class="btn">>> SZCZEGÓŁY PROJEKTU</a>
+        <a href="projekt_ble_sht45.html" class="btn">Szczegóły projektu</a>
     </section>
-    
+
     <footer>
-        SYS.DATE: 2026 // ŁUKASZ GRZYBOWSKI
+        © 2026 Łukasz Grzybowski
     </footer>
 </div>
 
