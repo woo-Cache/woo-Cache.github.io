@@ -4,28 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Węzły BLE nRF52840 - Łukasz Grzybowski</title>
-    </head>
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
 
-<header>
-    <h1>Energooszczędne węzły BLE</h1>
-    <p>Seeed Studio XIAO nRF52840 | SHT45 | Zasilanie CR2032</p>
-</header>
+<div class="container">
+    <header>
+        <h1>Energooszczędne węzły BLE</h1>
+        <p>Monitorowanie temperatury i wilgotności | Zasilanie CR2032</p>
+    </header>
 
-<section>
-    <h2>Opis projektu</h2>
-    <p>
-        Tutaj możesz opisać cały proces: projektowanie obwodu w EasyEDA, cel optymalizacji poboru prądu pod kątem baterii pastylkowej, oraz integrację czujnika SHT45...
-    </p>
-    
-    <h2>Galeria</h2>
-    <br><br>
-    <a href="index.html" class="btn">← Powrót do strony głównej</a>
-</section>
+    <section>
+        <a href="index.html" class="btn" style="margin-bottom: 20px;">← Wróć do projektów</a>
+        
+        <h2>Założenia projektu</h2>
+        <p>
+            Głównym celem było stworzenie bardzo kompaktowego i niezależnego energetycznie węzła rozgłoszeniowego BLE. Wyzwaniem była optymalizacja hardware'u i oprogramowania tak, aby zejść z poborem prądu do poziomu zaledwie ułamków mikroamperów (µA) podczas uśpienia. Pozwala to na długie miesiące pracy na jednej baterii pastylkowej, co w połączeniu z nadzorem napięcia na bieżąco, tworzy stabilny system telemetryczny.
+        </p>
 
-<footer>
-    © 2026 Łukasz Grzybowski
-</footer>
+        <h3>Hardware i budowa</h3>
+        <ul class="tech-list">
+            <li><strong>Jednostka główna:</strong> Seeed Studio XIAO nRF52840</li>
+            <li><strong>Czujnik:</strong> SHT45 (precyzyjny pomiar, komunikacja I2C)</li>
+            <li><strong>Zasilanie:</strong> Gniazdo na baterię Energizer CR2032 3V na spodzie.</li>
+            <li><strong>PCB:</strong> Autorski układ typu "kanapka" (stack). Zaprojektowałem własne pady i użyłem złącz kołkowych, aby połączyć moduły w jedną, miniaturową kostkę. Przygotowałem różne warianty kolorystyczne soldermaski (zielony, czarny, żółty, niebieski).</li>
+        </ul>
+        
+        <h2>Galeria montażu</h2>
+        <div class="gallery">
+            <img src="foto_4_moduly.jpg" alt="Cztery zmontowane węzły w różnych kolorach PCB">
+            <div class="gallery-caption">Zmontowane jednostki. Widać porty USB-C od XIAO nRF52840 do flashowania. Różne kolory soldermaski pomagają w identyfikacji konkretnych węzłów.</div>
+
+            <img src="foto_rozebrane_top_bot.jpg" alt="Widok na warstwę SHT45 oraz XIAO nRF52840">
+            <div class="gallery-caption">Moduł rozebrany na warstwy. Na górze widać układ wyprowadzeń SHT45 (SDA, SCL, 3Vo, GND), na dole zlutowane złącza nRF52840.</div>
+
+            <img src="foto_bateria_gniazdo.jpg" alt="Gniazdo baterii CR2032 na spodzie">
+            <div class="gallery-caption">Dolna warstwa zawierająca uchwyt na baterię pastylkową CR2032 wraz z wyprowadzonymi złączami goldpin.</div>
+
+            <img src="foto_antena_zewnetrzna.jpg" alt="Moduł z zewnętrzną anteną u.FL">
+            <div class="gallery-caption">Testy różnych rozwiązań zasięgowych – obok złożonych kostek znajduje się moduł z podpiętą zewnętrzną anteną elastyczną na złączu u.FL.</div>
+        </div>
+    </section>
+
+    <footer>
+        © 2026 Łukasz Grzybowski
+    </footer>
+</div>
 
 </body>
 </html>
