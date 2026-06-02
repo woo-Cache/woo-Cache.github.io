@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imię Nazwisko – Projekty Elektroniczne</title>
+    <title>Łukasz Grzybowski – Projekty Elektroniczne</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -35,19 +35,25 @@
             font-size: 0.9rem;
             color: #777;
         }
-        a {
-            color: #0066cc;
+        a.btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: #0066cc;
+            color: white;
             text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
         }
-        a:hover {
-            text-decoration: underline;
+        a.btn:hover {
+            background-color: #004c99;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Imię Nazwisko</h1>
+    <h1>Łukasz Grzybowski</h1>
     <p>Elektronika • Embedded • Python • Systemy IoT</p>
 </header>
 
@@ -55,30 +61,24 @@
     <h2>O mnie</h2>
     <p>
         Tworzę projekty łączące elektronikę z oprogramowaniem.
-        Specjalizuję się w systemach opartych na Raspberry Pi, ESP32 i Pythonie.
+        Specjalizuję się w energooszczędnych systemach wbudowanych, automatyce i rozwiązaniach opartych na Raspberry Pi oraz mikrokontrolerach ESP32 i nRF52840.
     </p>
 </section>
 
 <section>
     <h2>Projekty</h2>
 
-    <h3>System monitoringu temperatury i wilgotności</h3>
+    <h3>Energooszczędne węzły sensoryczne BLE (nRF52840 + SHT45)</h3>
     <p>
-        Raspberry Pi + MySQL + wizualizacja danych.
+        Zaprojektowane od podstaw, miniaturowe moduły na autorskiej płytce PCB. Urządzenia oparte są o mikrokontroler Seeed Studio XIAO nRF52840 oraz wysoce precyzyjny czujnik temperatury i wilgotności SHT45. Całość zasilana jest z baterii CR2032. Kod został zoptymalizowany pod kątem głębokiego usypiania, redukując pobór prądu do poziomu mikroamperów (µA), co pozwala na długotrwałą pracę bez wymiany zasilania.
         <br>
-        <a href="#">Zobacz repozytorium</a>
+        <a href="projekt_ble_sht45.html" class="btn">Szczegóły projektu</a>
     </p>
 
-    <h3>ESP32 – Czujniki środowiskowe</h3>
-    <p>
-        SHT4x + ENS160 + zapis danych co 60 sekund.
-        <br>
-        <a href="#">Zobacz repozytorium</a>
-    </p>
-</section>
+    </section>
 
 <footer>
-    © 2026 Imię Nazwisko
+    © 2026 Łukasz Grzybowski
 </footer>
 
 </body>
