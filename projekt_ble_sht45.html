@@ -17,33 +17,71 @@
     <section>
         <a href="index.html" class="btn" style="margin-bottom: 20px;">← Wróć do projektów</a>
         
-        <h2>Założenia projektu</h2>
+        <h2>Założenia projektu i geneza</h2>
         <p>
-            Głównym celem było stworzenie bardzo kompaktowego i niezależnego energetycznie węzła rozgłoszeniowego BLE. Wyzwaniem była optymalizacja hardware'u i oprogramowania tak, aby zejść z poborem prądu do poziomu zaledwie ułamków mikroamperów (µA) podczas uśpienia. Pozwala to na długie miesiące pracy na jednej baterii pastylkowej, co w połączeniu z nadzorem napięcia na bieżąco, tworzy stabilny system telemetryczny.
+            Od pewnego czasu w moim mieszkaniu prowadziłem regularne pomiary temperatury i wilgotności. Początkowo celem było po prostu precyzyjne monitorowanie mikroklimatu w celu optymalizacji pracy ogrzewania i wentylacji, aby zapewnić idealne warunki domownikom oraz kontrolować wilgotność w okresie grzewczym.
         </p>
-
-        <h3>Hardware i budowa</h3>
+        <p>
+            Do realizacji tego zadania wykorzystywałem mikrokontrolery <span class="tech-tag">ESP32-C3</span> oraz czujniki <span class="tech-tag">SHT45</span>. Korzystanie z takiego zestawu miało w zasadzie same zalety: absurdalna dokładność (0.1°C oraz 1% RH w warunkach domowych), kompaktowa budowa, możliwość ustalenia dowolnego czasu reakcji (w granicach rozsądku otoczenie można badać nawet co kilka sekund) oraz bezproblemowa integracja z ESPHome i Home Assistantem.
+        </p>
+        <p>
+            <strong>Jednakowoż jedna rzecz była niesamowicie drażniąca – zasilanie.</strong>
+        </p>
+        <p>
+            Rozwiązałem tę sprawę w najprostszy możliwy sposób: kostka do ładowania, krótki kabel USB i... konieczność stałego dostępu do gniazdka. W praktyce drastycznie ograniczało to możliwości optymalnego umiejscowienia czujnika. W domu mam 6 pomieszczeń, w których regularnie monitoruję warunki otoczenia, plus dodatkowy czujnik na zewnątrz. O ile w niektórych miejscach musiałem działać bardzo kreatywnie, by estetycznie doprowadzić upragnione 5V, o tyle w kilku pozostałych byłem skazany na okupowanie gniazdek sieciowych. Ciągłe kompromisy związane z pozycjonowaniem czujników stały się na tyle uciążliwe, że naturalnym krokiem było przejście na zasilanie bateryjne.
+        </p>
+        <p>
+            Aby jednak skutecznie zminimalizować pobór prądu, musiałem zrezygnować z dotychczasowych dogodnień i całkowicie przedefiniować architekturę systemu. Nowe założenia prezentowały się następująco:
+        </p>
         <ul class="tech-list">
-            <li><strong>Jednostka główna:</strong> Seeed Studio XIAO nRF52840</li>
-            <li><strong>Czujnik:</strong> SHT45 (precyzyjny pomiar, komunikacja I2C)</li>
-            <li><strong>Zasilanie:</strong> Gniazdo na baterię Energizer CR2032 3V na spodzie.</li>
-            <li><strong>PCB:</strong> Autorski układ typu "kanapka" (stack). Zaprojektowałem własne pady i użyłem złącz kołkowych, aby połączyć moduły w jedną, miniaturową kostkę. Przygotowałem różne warianty kolorystyczne soldermaski (zielony, czarny, żółty, niebieski).</li>
+            <li><strong>Zasilanie bateryjne:</strong> wprowadzenie kontrolera w stan głębokiego uśpienia (deep sleep) poza oknem pomiarowym oraz ograniczenie częstotliwości próbkowania.</li>
+            <li><strong>Bezprzewodowa komunikacja:</strong> bezpośrednie raportowanie do "kontrolera-matki" lub platformy Home Assistant z późniejszą archiwizacją danych w bazie.</li>
+            <li><strong>Bezkompromisowa dokładność:</strong> utrzymanie precyzyjnego pomiaru temperatury i wilgotności.</li>
+            <li><strong>Diagnostyka:</strong> możliwość bieżącego monitorowania napięcia baterii w celu estymacji czasu jej wymiany.</li>
+            <li><strong>Kompaktowa budowa:</strong> zamknięcie całości w miniaturowej formie.</li>
         </ul>
-        
-        <h2>Galeria montażu</h2>
-        <div class="gallery">
-            <img src="IMG_2818.jpeg" alt="Cztery zmontowane węzły w różnych kolorach PCB">
-            <div class="gallery-caption">Zmontowane jednostki. Widać porty USB-C od XIAO nRF52840 do flashowania. Różne kolory soldermaski pomagają w identyfikacji konkretnych węzłów.</div>
+    </section>
 
-            <img src="foto_rozebrane_top_bot.jpg" alt="Widok na warstwę SHT45 oraz XIAO nRF52840">
-            <div class="gallery-caption">Moduł rozebrany na warstwy. Na górze widać układ wyprowadzeń SHT45 (SDA, SCL, 3Vo, GND), na dole zlutowane złącza nRF52840.</div>
+    <section>
+        <h2>[01] Analiza układu zasilania</h2>
+        <p>
+            Większość standardowych baterii czy akumulatorów (np. Li-Ion) wymagałaby zastosowania przetwornicy do stabilizacji napięcia. To z kolei generowałoby dodatkowe straty energii – w projektach low-power prąd spoczynkowy (quiescent current) samej przetwornicy potrafi w kilka tygodni wyssać baterię, nie mówiąc o cennej przestrzeni na PCB.
+        </p>
+        <p>
+            Najbardziej eleganckim rozwiązaniem było znalezienie ogniwa, którego krzywa rozładowania idealnie pokrywa się z bezpiecznym zakresem pracy mikrokontrolera. Dobrym kandydatem wydawało się ogniwo 18650 LiFePO4 (pracujące w zakresie 3.0V – 3.6V), co mieści się w tolerancji większości układów z rodziny ESP32. Jednak gabaryty 18650 całkowicie przekreślały plan budowy miniaturowej kostki.
+        </p>
+        <p>
+            W trakcie poszukiwań postanowiłem wyjść ze swojej strefy komfortu i przeanalizować specyfikacje innych architektur. Moją uwagę przykuł układ <strong>nRF52840</strong>. Podczas gdy większość peryferiów domyślnie oczekuje logiki 3.3V, ten mikrokontroler potrafi stabilnie pracować w szerokim zakresie napięć, schodząc aż do 1.7V.
+        </p>
+        <p>
+            To odkrycie otworzyło zupełnie nowe możliwości i skierowało mój wzrok w stronę baterii pastylkowych <span class="tech-tag">CR2032</span>. Są niewielkie, tanie, ale też bezwzględnie weryfikują optymalizację kodu – ich pojemność to zaledwie 200–250 mAh. Przejście z rzędu 3000 mAh na tak skromny budżet energetyczny budziło spore obawy, czy projekt nie skończy się koniecznością wymiany baterii co dwa tygodnie. Podjąłem jednak ryzyko.
+        </p>
+        <p>
+            <strong>Wybrany mikrokontroler:</strong> Seeed Studio XIAO nRF52840
+        </p>
+    </section>
 
-            <img src="foto_bateria_gniazdo.jpg" alt="Gniazdo baterii CR2032 na spodzie">
-            <div class="gallery-caption">Dolna warstwa zawierająca uchwyt na baterię pastylkową CR2032 wraz z wyprowadzonymi złączami goldpin.</div>
+    <section>
+        <h2>[02] Architektura komunikacji</h2>
+        <p>
+            Moje obawy dotyczące krótkiego czasu pracy na baterii pastylkowej wynikały głównie z przyzwyczajenia do sieci Wi-Fi. Dotychczas transmisja danych przez protokół MQTT pozwalała serwerowi na szybkie przechwytywanie i logowanie wyników. Wi-Fi jest jednak niezwykle prądożerne, a dodatkowo wybrany moduł XIAO nRF52840 fizycznie nie posiada radia Wi-Fi... za to genialnie radzi sobie z technologią Bluetooth.
+        </p>
+        <p>
+            <strong>Wybrany sposób komunikacji:</strong> <span class="tech-tag">Bluetooth Low Energy (BLE)</span>
+        </p>
+    </section>
 
-            <img src="foto_antena_zewnetrzna.jpg" alt="Moduł z zewnętrzną anteną u.FL">
-            <div class="gallery-caption">Testy różnych rozwiązań zasięgowych – obok złożonych kostek znajduje się moduł z podpiętą zewnętrzną anteną elastyczną na złączu u.FL.</div>
-        </div>
+    <section>
+        <h2>[03] Ekosystem BLE i odbiór danych</h2>
+        <p>
+            BLE to fenomenalny, energooszczędny protokół stworzony właśnie do takich zastosowań, pozwalający rynkowym sensorom pracować miesiącami lub latami na jednej baterii. Postanowiłem wdrożyć ten mechanizm u siebie.
+        </p>
+        <p>
+            Docelowy algorytm działania węzła jest prosty: mikrokontroler budzi się ze stanu głębokiego uśpienia, odpytuje czujnik SHT45 przez magistralę I2C, pakuje surowe dane do ramki rozgłoszeniowej (Advertising Packet) BLE, emituje ją w eter przez ułamek sekundy, po czym natychmiast wraca do głębokiego snu na określony czas.
+        </p>
+        <p>
+            Pozostało jedno kluczowe pytanie: jak te dane skutecznie wyłapać? Pierwotnie planowałem obarczyć tym zadaniem wbudowany moduł Bluetooth w Raspberry Pi obsługującym Home Assistant. W międzyczasie jednak w moje ręce wpadła nowa płytka <strong>ESP32-C6</strong>. Wyposażyłem ją w zewnętrzną antenę i narodził się pomysł, by wykorzystać ją jako dedykowany odbiornik-bramkę (BLE Gateway). Odpowiednio zaprogramowana za pomocą ESPHome, zbiera pakiety z moich miniaturowych kostek nRF52840 i bezpośrednio przekazuje czyste encje do Home Assistanta. Brzmiało to jak plan doskonały.
+        </p>
     </section>
 
     <footer>
