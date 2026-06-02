@@ -3,83 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Łukasz Grzybowski – Projekty Elektroniczne</title>
+    <title>Łukasz Grzybowski – Hardware & Code</title>
     <style>
+        /* Techniczny, surowy motyw */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #d4d4d4;
             margin: 0;
-            background-color: #f4f4f4;
-            color: #333;
+            padding: 20px;
+            line-height: 1.6;
         }
+        
+        /* Główny kontener o ostrych rysach */
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background-color: #1e1e1e;
+            border: 2px solid #444;
+            box-shadow: 8px 8px 0px #000; /* Twardy, "brutalistyczny" cień */
+        }
+
+        /* Nagłówek w stylu terminala */
         header {
-            background: #222;
-            color: white;
-            padding: 2rem;
-            text-align: center;
+            background-color: #000;
+            border-bottom: 3px solid #ff8800; /* Przemysłowy pomarańcz */
+            padding: 30px;
         }
+        
+        h1, h2, h3 {
+            font-family: 'Consolas', 'Courier New', monospace;
+            color: #ff8800;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #888;
+            font-family: monospace;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
         section {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 1rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            padding: 25px 30px;
+            border-bottom: 1px dashed #444;
         }
-        h2 {
-            border-bottom: 2px solid #eee;
-            padding-bottom: 0.5rem;
+
+        section:last-of-type {
+            border-bottom: none;
         }
-        footer {
-            text-align: center;
-            padding: 1rem;
-            font-size: 0.9rem;
-            color: #777;
+
+        /* Tagi technologii */
+        .tech-tag {
+            display: inline-block;
+            background-color: #333;
+            color: #fff;
+            padding: 4px 10px;
+            font-size: 0.8rem;
+            font-family: monospace;
+            border: 1px solid #555;
+            margin-right: 5px;
+            margin-bottom: 10px;
         }
+
+        /* Solidny, techniczny przycisk */
         a.btn {
             display: inline-block;
-            margin-top: 10px;
-            padding: 8px 12px;
-            background-color: #0066cc;
-            color: white;
+            margin-top: 15px;
+            padding: 10px 18px;
+            background-color: transparent;
+            color: #ff8800;
             text-decoration: none;
-            border-radius: 4px;
-            font-size: 0.9rem;
+            border: 2px solid #ff8800;
+            font-weight: bold;
+            font-family: monospace;
+            text-transform: uppercase;
+            transition: all 0.15s ease-in-out;
         }
+
         a.btn:hover {
-            background-color: #004c99;
+            background-color: #ff8800;
+            color: #000;
+        }
+
+        footer {
+            background-color: #000;
+            color: #666;
+            text-align: center;
+            padding: 15px;
+            font-family: monospace;
+            border-top: 2px solid #444;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Łukasz Grzybowski</h1>
-    <p>Elektronika • Embedded • Python • Systemy IoT</p>
-</header>
+<div class="container">
+    <header>
+        <h1>Łukasz Grzybowski</h1>
+        <p>> SYSTEMY EMBEDDED_ | AUTOMATYKA_ | PYTHON_</p>
+    </header>
 
-<section>
-    <h2>O mnie</h2>
-    <p>
-        Tworzę projekty łączące elektronikę z oprogramowaniem.
-        Specjalizuję się w energooszczędnych systemach wbudowanych, automatyce i rozwiązaniach opartych na Raspberry Pi oraz mikrokontrolerach ESP32 i nRF52840.
-    </p>
-</section>
-
-<section>
-    <h2>Projekty</h2>
-
-    <h3>Energooszczędne węzły sensoryczne BLE (nRF52840 + SHT45)</h3>
-    <p>
-        Zaprojektowane od podstaw, miniaturowe moduły na autorskiej płytce PCB. Urządzenia oparte są o mikrokontroler Seeed Studio XIAO nRF52840 oraz wysoce precyzyjny czujnik temperatury i wilgotności SHT45. Całość zasilana jest z baterii CR2032. Kod został zoptymalizowany pod kątem głębokiego usypiania, redukując pobór prądu do poziomu mikroamperów (µA), co pozwala na długotrwałą pracę bez wymiany zasilania.
-        <br>
-        <a href="projekt_ble_sht45.html" class="btn">Szczegóły projektu</a>
-    </p>
-
+    <section>
+        <h2>[01] O MNIE</h2>
+        <p>
+            Tworzę projekty łączące sprzęt z oprogramowaniem.
+            Specjalizuję się w energooszczędnych systemach wbudowanych, automatyce i rozwiązaniach opartych na serwerach linuksowych oraz mikrokontrolerach.
+        </p>
     </section>
 
-<footer>
-    © 2026 Łukasz Grzybowski
-</footer>
+    <section>
+        <h2>[02] PROJEKTY SPRZĘTOWE</h2>
+
+        <h3>Energooszczędne węzły sensoryczne BLE</h3>
+        <div>
+            <span class="tech-tag">nRF52840</span>
+            <span class="tech-tag">SHT45</span>
+            <span class="tech-tag">C++</span>
+            <span class="tech-tag">EasyEDA</span>
+        </div>
+        <p>
+            Zaprojektowane od podstaw, miniaturowe moduły na autorskiej płytce PCB. Urządzenia oparte są o mikrokontroler Seeed Studio XIAO nRF52840 oraz wysoce precyzyjny czujnik temperatury i wilgotności SHT45. Całość zasilana jest z baterii CR2032. Kod został zoptymalizowany pod kątem głębokiego usypiania, redukując pobór prądu do poziomu mikroamperów (µA), co pozwala na długotrwałą pracę bez wymiany zasilania.
+        </p>
+        <a href="projekt_ble_sht45.html" class="btn">>> SZCZEGÓŁY PROJEKTU</a>
+    </section>
+    
+    <footer>
+        SYS.DATE: 2026 // ŁUKASZ GRZYBOWSKI
+    </footer>
+</div>
 
 </body>
 </html>
